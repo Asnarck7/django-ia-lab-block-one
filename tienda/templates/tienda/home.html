@@ -1,8 +1,15 @@
-{% extends "tienda/base.html" %}
+{% extends 'tienda/base.html' %}
 
-{% block title %}Inicio - Django AI Lab{% endblock %}
-
-{% block content %}
-<h1>Bienvenido a la tienda online - Django AI Lab</h1>
+{% block title %}
+  Inicio - Tienda
 {% endblock %}
 
+{% block content %}
+  <div class="hero text-center p-5 rounded">
+    <h1 class="display-4">🛒 Bienvenido a la tienda</h1>
+    <p class="lead">Encuentra productos increíbles al mejor precio</p>
+
+    <a href="/productos" class="btn btn-success btn-lg mt-3">Ver productos</a>
+
+  </div>
+{% endblock %}

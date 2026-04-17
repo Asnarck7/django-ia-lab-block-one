@@ -3,21 +3,102 @@
 {% block title %}Pedidos{% endblock %}
 
 {% block content %}
-<h1>Lista de Pedidos</h1>
 
-<ul>
+<div class="container mt-4">
+
+  <!-- 🔥 HEADER -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>📦 Lista de Pedidos</h2>
+
+    <a href="{% url 'tienda:crear_pedido' %}" class="btn btn-success">
+      ➕ Nuevo pedido
+    </a>
+  </div>
+
+  <!-- GRID -->
+  <div class="row">
+
     {% for pedido in pedidos %}
-        <li>
-            Pedido #{{ pedido.id }} - Cliente: {{ pedido.cliente.nombre }} - Estado: {{ pedido.estado }} - Fecha: {{ pedido.fecha|date:"d/m/Y H:i" }}
-            <ul>
-                {% for producto in pedido.productos.all %}
-                    <li>{{ producto.nombre }} - ${{ producto.precio }}</li>
-                {% endfor %}
-            </ul>
-        </li>
+    <div class="col-md-4">
+
+      <div class="card shadow-sm mb-4">
+
+        <div class="card-body">
+
+          <!-- HEADER PEDIDO -->
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <h5 class="card-title mb-0">
+              Pedido #{{ pedido.id }}
+            </h5>
+
+            <span class="badge estado-{{ pedido.estado }}">
+              {{ pedido.estado }}
+            </span>
+          </div>
+
+          <p class="mb-1">
+            <strong>Cliente:</strong> {{ pedido.cliente.nombre }}
+          </p>
+
+          <p class="mb-2">
+            <strong>Fecha:</strong> {{ pedido.fecha|date:"d/m/Y H:i" }}
+          </p>
+
+          <hr>
+
+          <!-- PRODUCTOS -->
+          <h6>🛍 Productos</h6>
+
+          <ul class="list-unstyled">
+            {% for item in pedido.items.all %}
+            <li class="d-flex justify-content-between">
+              <span>
+                {{ item.producto.nombre }} (x{{ item.cantidad }})
+              </span>
+              <span>
+                ${{ item.producto.precio }}
+              </span>
+            </li>
+            {% endfor %}
+          </ul>
+
+          <hr>
+
+          <!-- BOTONES -->
+          <div class="d-flex gap-2">
+
+            <!-- VER -->
+            <a href="{% url 'tienda:detalle_pedido' pedido.id %}" class="btn btn-primary btn-sm">
+              Ver Factura
+            </a>
+
+            <!-- EDITAR -->
+            <a href="{% url 'tienda:editar_pedido' pedido.id %}" class="btn btn-warning btn-sm">
+              Editar
+            </a>
+
+            <!-- ELIMINAR -->
+            <form action="{% url 'tienda:eliminar_pedido' pedido.id %}" method="post">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-danger btn-sm">
+                Eliminar
+              </button>
+            </form>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
     {% empty %}
-        <li>No hay pedidos disponibles.</li>
+    <div class="col-12">
+      <p>No hay pedidos aún.</p>
+    </div>
     {% endfor %}
-</ul>
+
+  </div>
+</div>
 
 {% endblock %}

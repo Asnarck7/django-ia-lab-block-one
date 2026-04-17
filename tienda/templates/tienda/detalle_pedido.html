@@ -1,0 +1,73 @@
+{% extends "tienda/base.html" %}
+
+{% block title %}Factura Pedido{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <!-- FORMA TIPO TICKET :3 -->
+    <div class="ticket">
+
+        <h3 class="text-center">🧾 FACTURA</h3>
+        <hr>
+
+        <p><strong>Pedido #:</strong> {{ pedido.id }}</p>
+        <p><strong>Cliente:</strong> {{ pedido.cliente.nombre }}</p>
+        <p><strong>Fecha:</strong> {{ pedido.fecha|date:"d/m/Y H:i" }}</p>
+
+        <hr>
+
+        <h5>🛍 Productos</h5>
+
+        <!-- 📊 TABLA -->
+        <table class="table table-sm table-bordered">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for item in items %}
+                <tr>
+                    <td>{{ item.producto.nombre }}</td>
+                    <td>${{ item.producto.precio }}</td>
+                    <td>{{ item.cantidad }}</td>
+                    <td>${{ item.line_total }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <hr>
+
+        <div class="ticket-total">
+            <p><strong>Total unidades:</strong> {{ total_unidades }}</p>
+            <h4><strong>Total: ${{ total_pedido }}</strong></h4>
+        </div>
+
+        <hr>
+
+        <p class="text-center">Gracias por su compra 🙌</p>
+
+    </div>
+
+    <br>
+
+    <div class="text-center">
+        <a href="{% url 'tienda:lista_pedidos' %}" class="btn btn-secondary">
+            ⬅ Volver
+        </a>
+
+        <button onclick="window.print()" class="btn btn-primary">
+            🖨 Imprimir
+        </button>
+    </div>
+
+</div>
+
+{% endblock %}

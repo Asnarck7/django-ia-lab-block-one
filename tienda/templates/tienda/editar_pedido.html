@@ -1,0 +1,39 @@
+{% extends "tienda/base.html" %}
+
+{% block title %}Editar Pedido{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2>✏️ Editar Pedido #{{ pedido.id }}</h2>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="card p-3 mb-3">
+            <h5>Datos del pedido</h5>
+            {{ pedido_form.as_p }}
+        </div>
+
+        <div class="card p-3">
+            <h5>Productos del pedido</h5>
+            {{ formset.management_form }}
+            {{ formset.as_p }}
+        </div>
+
+        <br>
+
+        <button type="submit" class="btn btn-primary">
+            💾 Guardar cambios
+        </button>
+
+        <a href="{% url 'tienda:lista_pedidos' %}" class="btn btn-secondary">
+            Cancelar
+        </a>
+
+    </form>
+
+</div>
+
+{% endblock %}

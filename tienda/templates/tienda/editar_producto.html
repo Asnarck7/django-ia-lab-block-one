@@ -1,0 +1,22 @@
+{% extends "tienda/base.html" %}
+
+{% block title %}Editar Producto{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>✏️ Editar producto</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit" class="btn btn-primary">
+            Guardar cambios
+        </button>
+
+        <a href="{% url 'tienda:detalle_producto' producto.pk %}" class="btn btn-secondary">
+            Cancelar
+        </a>
+    </form>
+</div>
+{% endblock %}

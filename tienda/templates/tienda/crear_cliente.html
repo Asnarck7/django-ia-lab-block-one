@@ -1,0 +1,28 @@
+{% extends "tienda/base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2>Registrar Cliente</h2>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <label>Nombre</label>
+        {{ form.nombre }}
+
+        <label>Correo</label>
+        {{ form.correo }}
+
+        <label>Activo</label>
+        {{ form.activo }}
+
+        <button type="submit" class="btn btn-primary">
+            Guardar
+        </button>
+
+        <a href="{% url 'tienda:lista_clientes' %}" class="btn btn-secondary">
+            Cancelar
+        </a>
+    </form>
+</div>
+{% endblock %}
